@@ -1,0 +1,41 @@
+ 
+##########################################################################
+#
+#  Script:    MultiXcan_female_CRC.pbs
+#  Author:    Emma Hazelwood
+#  Created:   24-04-2023
+#
+#
+##########################################################################
+
+#PBS -N jp_test
+#PBS -r n
+#PBS -l mem=7GB,walltime=12::00
+#PBS -m ae
+#PBS -M emma.hazelwood@bristol.ac.uk
+
+module load python/3.9.13
+
+cd MetaXcan/software
+
+./SMulTiXcan.py \
+--models_folder MASHR_sample_data/data/models/eqtl/mashr/ \
+--models_name_filter ".*Adipose_Subcutaneous.*db" ".*Adipose_Visceral_Omentum.*db" ".*Colon_Sigmoid.*db" ".*Colon_Transverse.*db" ".*Whole_Blood.*db" ".*Cells_EBV-transformed_lymphocytes.*db" \
+--models_name_pattern "mashr_(.*).db" \
+--snp_covariance GTEx/TWAS/gtex_v8_expression_mashr_snp_smultixcan_covariance.txt.gz \
+--metaxcan_folder SPrediXcan_results/ \
+--metaxcan_filter "(.*)_female_CRC.csv" \
+--metaxcan_file_name_parse_pattern "(.*)_female_CRC.csv" \
+--gwas_file processed_summary_imputation/female_CRC_GWAS_noUKBio.txt.gz \
+--snp_column panel_variant_id \
+--effect_allele_column effect_allele \
+--non_effect_allele_column non_effect_allele \
+--zscore_column zscore \
+--keep_non_rsid \
+--model_db_snp_key varID \
+--cutoff_condition_number 30 \
+--verbosity 7 \
+--throw \
+--output SMultiXcan_Results/SMultiXcan_results_female_CRC.csv
+
+

@@ -1,0 +1,1 @@
+grep -f splice_coloc_as file.temp3_Adipose_Subcutaneous > Adipose_Subcutaneous.v8.sqtl_allpairs_filtered_finemapping.txt

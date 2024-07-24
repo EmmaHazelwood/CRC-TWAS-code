@@ -1,0 +1,13 @@
+#!/bin/bash
+
+zcat v8_sQTL_all_associations/Adipose_Subcutaneous.v8.sqtl_allpairs.txt.gz > Adipose_Subcutaneous.v8.sqtl_allpairs.txt
+
+sed -e '1s/phenotype_id/chr:pos1:pos2:id:gene/' Adipose_Subcutaneous.v8.sqtl_allpairs.txt > test
+
+awk -F":" '$1=$1' OFS="\t" test > tmp && mv tmp file.temp
+
+awk '{$1=(NR==1?"ID":$1":"$2); $2=""}1' file.temp > file.temp2
+
+awk '{$1=(NR==1?"ID":$1":"$2); $2=""}1' file.temp2 > file.temp3
+
+grep -f splice_as file.temp3_Adipose_Subcutaneous > Adipose_Subcutaneous.v8.sqtl_allpairs_filtered.txt

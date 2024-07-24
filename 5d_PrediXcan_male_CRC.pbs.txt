@@ -1,0 +1,93 @@
+ 
+##########################################################################
+#
+#  Script:    PrediXcan_male_CRC.pbs
+#  Author:    Emma Hazelwood
+#  Created:   20-04-2023
+#
+#
+##########################################################################
+
+#PBS -N jp_test
+#PBS -r n
+#PBS -l mem=7GB,walltime=12::00
+#PBS -m ae
+#PBS -M emma.hazelwood@bristol.ac.uk
+
+module load python/3.9.13
+
+cd MetaXcan/software
+
+./SPrediXcan.py \
+--model_db_path GTEx/TWAS/elastic_net_models/en_Adipose_Subcutaneous.db \
+--covariance GTEx/TWAS/elastic_net_models/en_Adipose_Subcutaneous.txt.gz \
+--gwas_file Formatted_GECCO/formatted_male_CRC_GWAS_noUKBio_summary_stats_annotated.txt \
+--separator , \
+--snp_column SNP \
+--effect_allele_column Allele1 \
+--non_effect_allele_column Allele2 \
+--beta_column Effect \
+--pvalue_column P.value \
+--output_file SPrediXcan_results/Adipose_Subcutaneous_male_CRC.csv
+
+./SPrediXcan.py \
+--model_db_path GTEx/TWAS/elastic_net_models/en_Adipose_Visceral_Omentum.db \
+--covariance GTEx/TWAS/elastic_net_models/en_Adipose_Visceral_Omentum.txt.gz \
+--gwas_file Formatted_GECCO/formatted_male_CRC_GWAS_noUKBio_summary_stats_annotated.txt \
+--separator , \
+--snp_column SNP \
+--effect_allele_column Allele1 \
+--non_effect_allele_column Allele2 \
+--beta_column Effect \
+--pvalue_column P.value \
+--output_file SPrediXcan_results/Adipose_Visceral_Omentum_male_CRC.csv 
+
+./SPrediXcan.py \
+--model_db_path GTEx/TWAS/elastic_net_models/en_Cells_EBV-transformed_lymphocytes.db \
+--covariance GTEx/TWAS/elastic_net_models/en_Cells_EBV-transformed_lymphocytes.txt.gz \
+--gwas_file Formatted_GECCO/formatted_male_CRC_GWAS_noUKBio_summary_stats_annotated.txt \
+--separator , \
+--snp_column SNP \
+--effect_allele_column Allele1 \
+--non_effect_allele_column Allele2 \
+--beta_column Effect \
+--pvalue_column P.value \
+--output_file SPrediXcan_results/Cells_EBV-transformed_lymphocytes_male_CRC.csv 
+
+./SPrediXcan.py \
+--model_db_path GTEx/TWAS/elastic_net_models/en_male_Sigmoid.db \
+--covariance GTEx/TWAS/elastic_net_models/en_male_Sigmoid.txt.gz \
+--gwas_file Formatted_GECCO/formatted_male_CRC_GWAS_noUKBio_summary_stats_annotated.txt \
+--separator , \
+--snp_column SNP \
+--effect_allele_column Allele1 \
+--non_effect_allele_column Allele2 \
+--beta_column Effect \
+--pvalue_column P.value \
+--output_file SPrediXcan_results/male_Sigmoid_male_CRC.csv 
+
+./SPrediXcan.py \
+--model_db_path GTEx/TWAS/elastic_net_models/en_male_Transverse.db \
+--covariance GTEx/TWAS/elastic_net_models/en_male_Transverse.txt.gz \
+--gwas_file Formatted_GECCO/formatted_male_CRC_GWAS_noUKBio_summary_stats_annotated.txt \
+--separator , \
+--snp_column SNP \
+--effect_allele_column Allele1 \
+--non_effect_allele_column Allele2 \
+--beta_column Effect \
+--pvalue_column P.value \
+--output_file SPrediXcan_results/male_Transverse_male_CRC.csv 
+
+./SPrediXcan.py \
+--model_db_path GTEx/TWAS/elastic_net_models/en_Whole_Blood.db \
+--covariance GTEx/TWAS/elastic_net_models/en_Whole_Blood.txt.gz \
+--gwas_file Formatted_GECCO/formatted_male_CRC_GWAS_noUKBio_summary_stats_annotated.txt \
+--separator , \
+--snp_column SNP \
+--effect_allele_column Allele1 \
+--non_effect_allele_column Allele2 \
+--beta_column Effect \
+--pvalue_column P.value \
+--output_file SPrediXcan_results/Whole_Blood_male_CRC.csv 
+
+

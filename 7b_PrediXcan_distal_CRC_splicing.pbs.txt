@@ -1,0 +1,105 @@
+ 
+##########################################################################
+#
+#  Script:    PrediXcan_distal_CRC_splicing.pbs
+#  Author:    Emma Hazelwood
+#  Created:   20-04-2023
+#
+#
+##########################################################################
+
+#PBS -N jp_test
+#PBS -r n
+#PBS -l mem=7GB,walltime=12::00
+#PBS -m ae
+#PBS -M emma.hazelwood@bristol.ac.uk
+
+module load python/3.9.13
+
+cd MetaXcan/software
+
+./SPrediXcan.py \
+--model_db_path MASHR_sample_data/data/models/sqtl/mashr/mashr_Adipose_Subcutaneous.db \
+--covariance MASHR_sample_data/data/models/sqtl/mashr/mashr_Adipose_Subcutaneous.txt.gz \
+--gwas_file processed_summary_imputation/distal_CRC_GWAS_noUKBio.txt.gz \
+--snp_column panel_variant_id \
+--effect_allele_column effect_allele \
+--non_effect_allele_column non_effect_allele \
+--zscore_column zscore \
+--keep_non_rsid \
+--additional_output \
+--model_db_snp_key varID \
+--throw \
+--output_file SPrediXcan_results/Adipose_Subcutaneous_distal_CRC_splicing.csv
+
+./SPrediXcan.py \
+--model_db_path MASHR_sample_data/data/models/sqtl/mashr/mashr_Adipose_Visceral_Omentum.db \
+--covariance MASHR_sample_data/data/models/sqtl/mashr/mashr_Adipose_Visceral_Omentum.txt.gz \
+--gwas_file processed_summary_imputation/distal_CRC_GWAS_noUKBio.txt.gz \
+--snp_column panel_variant_id \
+--effect_allele_column effect_allele \
+--non_effect_allele_column non_effect_allele \
+--zscore_column zscore \
+--keep_non_rsid \
+--additional_output \
+--model_db_snp_key varID \
+--throw \
+--output_file SPrediXcan_results/Adipose_Visceral_Omentum_distal_CRC_splicing.csv 
+
+./SPrediXcan.py \
+--model_db_path MASHR_sample_data/data/models/sqtl/mashr/mashr_Cells_EBV-transformed_lymphocytes.db \
+--covariance MASHR_sample_data/data/models/sqtl/mashr/mashr_Cells_EBV-transformed_lymphocytes.txt.gz \
+--gwas_file processed_summary_imputation/distal_CRC_GWAS_noUKBio.txt.gz \
+--snp_column panel_variant_id \
+--effect_allele_column effect_allele \
+--non_effect_allele_column non_effect_allele \
+--zscore_column zscore \
+--keep_non_rsid \
+--additional_output \
+--model_db_snp_key varID \
+--throw \
+--output_file SPrediXcan_results/Cells_EBV-transformed_lymphocytes_distal_CRC_splicing.csv 
+
+./SPrediXcan.py \
+--model_db_path MASHR_sample_data/data/models/sqtl/mashr/mashr_Colon_Sigmoid.db \
+--covariance MASHR_sample_data/data/models/sqtl/mashr/mashr_Colon_Sigmoid.txt.gz \
+--gwas_file processed_summary_imputation/distal_CRC_GWAS_noUKBio.txt.gz \
+--snp_column panel_variant_id \
+--effect_allele_column effect_allele \
+--non_effect_allele_column non_effect_allele \
+--zscore_column zscore \
+--keep_non_rsid \
+--additional_output \
+--model_db_snp_key varID \
+--throw \
+--output_file SPrediXcan_results/Colon_Sigmoid_distal_CRC_splicing.csv 
+
+./SPrediXcan.py \
+--model_db_path MASHR_sample_data/data/models/sqtl/mashr/mashr_Colon_Transverse.db \
+--covariance MASHR_sample_data/data/models/sqtl/mashr/mashr_Colon_Transverse.txt.gz \
+--gwas_file processed_summary_imputation/distal_CRC_GWAS_noUKBio.txt.gz \
+--snp_column panel_variant_id \
+--effect_allele_column effect_allele \
+--non_effect_allele_column non_effect_allele \
+--zscore_column zscore \
+--keep_non_rsid \
+--additional_output \
+--model_db_snp_key varID \
+--throw \
+--output_file SPrediXcan_results/Colon_Transverse_distal_CRC_splicing.csv 
+
+./SPrediXcan.py \
+--model_db_path MASHR_sample_data/data/models/sqtl/mashr/mashr_Whole_Blood.db \
+--covariance MASHR_sample_data/data/models/sqtl/mashr/mashr_Whole_Blood.txt.gz \
+--gwas_file processed_summary_imputation/distal_CRC_GWAS_noUKBio.txt.gz \
+--snp_column panel_variant_id \
+--effect_allele_column effect_allele \
+--non_effect_allele_column non_effect_allele \
+--zscore_column zscore \
+--keep_non_rsid \
+--additional_output \
+--model_db_snp_key varID \
+--throw \
+--output_file SPrediXcan_results/Whole_Blood_distal_CRC_splicing.csv 
+
+

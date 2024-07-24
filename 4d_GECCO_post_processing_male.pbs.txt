@@ -1,0 +1,29 @@
+ 
+##########################################################################
+#
+#  Script:    GECCO_imputation_male.pbs
+#  Author:    Emma Hazelwood
+#  Created:   28-04-2023
+#
+#
+##########################################################################
+
+#PBS -N jp_test
+#PBS -r n
+#PBS -l mem=7GB,walltime=12::00
+#PBS -m ae
+#PBS -M emma.hazelwood@bristol.ac.uk
+
+module load python/3.5.0
+
+cd 
+
+GWAS_TOOLS="summary-gwas-imputation/src"
+OUTPUT=""
+
+python $GWAS_TOOLS/gwas_summary_imputation_postprocess.py \
+-gwas_file $OUTPUT/harmonized_gwas/male_CRC_GWAS_noUKBio_summary_stats_annotated_formatted.txt.gz \
+-folder $OUTPUT/summary_imputation \
+-pattern male_CRC_GWAS_noUKBio_.* \
+-parsimony 7 \
+-output $OUTPUT/processed_summary_imputation/male_CRC_GWAS_noUKBio.txt.gz
