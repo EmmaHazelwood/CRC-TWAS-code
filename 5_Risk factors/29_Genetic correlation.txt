@@ -1,0 +1,258 @@
+ 
+##########################################################################
+#
+#  Script:    Genetic correlation
+#  Author:    Emma Hazelwood
+#  Created:   17-05-2023
+#
+#
+##########################################################################
+
+#PBS -N jp_test
+#PBS -r n
+#PBS -l ncpus=2,mem=300GB,walltime=12:00:00
+#PBS -m ae
+#PBS -M emma.hazelwood@bristol.ac.uk
+
+
+export PATH="/mnt/backedup/home/emmaHa/anaconda3/bin:$PATH"
+
+source activate ldsc
+cd Genetic_correlation/ldsc/
+
+./munge_sumstats.py \
+--sumstats CRC_risk_factors/ieu-b-40.csv \
+--merge-alleles w_hm3.snplist \
+--N 681275 \
+--snp SNP \
+--a1 effect_allele.exposure \
+--a2 other_allele.exposure \
+--p pval.exposure \
+--frq eaf.exposure \
+--signed-sumstats beta.exposure,0 \
+--chunksize 500000 \
+--out BMI 
+./munge_sumstats.py \
+--sumstats CRC_risk_factors/fat-distn.giant.ukbb.meta-analysis.whr.combined_formatted.txt \
+--merge-alleles w_hm3.snplist \
+--N 697734 \
+--snp SNP \
+--a1 Allele1 \
+--a2 Allele2 \
+--p P-value \
+--frq Freq1 \
+--signed-sumstats Effect,0 \
+--chunksize 500000 \
+--out WHR 
+./munge_sumstats.py \
+--sumstats CRC_risk_factors/DRINKS_PER_WEEK_GWAS.txt \
+--merge-alleles w_hm3.snplist \
+--N 414343 \
+--snp MarkerName \
+--a1 A1 \
+--a2 A2 \
+--p Pval \
+--frq EAF_A1 \
+--signed-sumstats Beta,0 \
+--chunksize 500000 \
+--out AC 
+./munge_sumstats.py \
+--sumstats CRC_risk_factors/ieu-b-4877.csv \
+--merge-alleles w_hm3.snplist \
+--N 607291 \
+--snp SNP \
+--a1 effect_allele.exposure \
+--a2 other_allele.exposure \
+--p pval.exposure \
+--frq eaf.exposure \
+--signed-sumstats beta.exposure,0 \
+--chunksize 500000 \
+--out TU 
+./munge_sumstats.py \
+--sumstats CRC_risk_factors/ieu-a-974.csv \
+--merge-alleles w_hm3.snplist \
+--N 171977 \
+--snp SNP \
+--a1 effect_allele.exposure \
+--a2 other_allele.exposure \
+--p pval.exposure \
+--frq eaf.exposure \
+--signed-sumstats beta.exposure,0 \
+--chunksize 500000 \
+--out BMI_F 
+./munge_sumstats.py \
+--sumstats CRC_risk_factors/fat-distn.giant.ukbb.meta-analysis.whr.female_formatted.txt \
+--merge-alleles w_hm3.snplist \
+--N 381152 \
+--snp SNP \
+--a1 Allele1 \
+--a2 Allele2 \
+--p P-value \
+--frq Freq1 \
+--signed-sumstats Effect,0 \
+--chunksize 500000 \
+--out WHR_F 
+./munge_sumstats.py \
+--sumstats CRC_risk_factors/ieu-a-785.csv \
+--merge-alleles w_hm3.snplist \
+--N 152893 \
+--snp SNP \
+--a1 effect_allele.exposure \
+--a2 other_allele.exposure \
+--p pval.exposure \
+--frq eaf.exposure \
+--signed-sumstats beta.exposure,0 \
+--chunksize 500000 \
+--out BMI_M 
+./munge_sumstats.py \
+--sumstats CRC_risk_factors/fat-distn.giant.ukbb.meta-analysis.whr.male_formatted.txt \
+--merge-alleles w_hm3.snplist \
+--snp SNP \
+--a1 Allele1 \
+--a2 Allele2 \
+--p P-value \
+--frq Freq1 \
+--signed-sumstats Effect,0 \
+--chunksize 500000 \
+--N 316772 \
+--out WHR_M 
+./munge_sumstats.py \
+--sumstats Formatted_GECCO/formatted_overall_CRC_GWAS_noUKBio_summary_stats_annotated_space.txt \
+--merge-alleles w_hm3.snplist \
+--N 98715 \
+--snp SNP \
+--a1 Allele1 \
+--a2 Allele2 \
+--p P.value \
+--frq Freq1 \
+--signed-sumstats Effect,0 \
+--chunksize 500000 \
+--out CRC_overall 
+
+./ldsc.py \
+--rg CRC_overall.sumstats.gz,BMI.sumstats.gz,WHR.sumstats.gz,AC.sumstats.gz,TU.sumstats.gz,BMI_F.sumstats.gz,WHR_F.sumstats.gz,BMI_M.sumstats.gz,WHR_M.sumstats.gz \
+--ref-ld-chr eur_w_ld_chr/ \
+--w-ld-chr eur_w_ld_chr/ \
+--out rg_CRC_overall_risk_factors
+
+
+
+./munge_sumstats.py \
+--sumstats Formatted_GECCO/formatted_colon_CRC_GWAS_noUKBio_summary_stats_annotated_space.txt \
+--merge-alleles w_hm3.snplist \
+--N 57249 \
+--snp SNP \
+--a1 Allele1 \
+--a2 Allele2 \
+--p P.value \
+--frq Freq1 \
+--signed-sumstats Effect,0 \
+--chunksize 500000 \
+--out CRC_colon 
+
+./ldsc.py \
+--rg CRC_colon.sumstats.gz,BMI.sumstats.gz,WHR.sumstats.gz,AC.sumstats.gz,TU.sumstats.gz,BMI_F.sumstats.gz,WHR_F.sumstats.gz,BMI_M.sumstats.gz,WHR_M.sumstats.gz \
+--ref-ld-chr eur_w_ld_chr/ \
+--w-ld-chr eur_w_ld_chr/ \
+--out rg_CRC_colon_risk_factors
+
+
+./munge_sumstats.py \
+--sumstats Formatted_GECCO/formatted_distal_CRC_GWAS_noUKBio_summary_stats_annotated_space.txt \
+--merge-alleles w_hm3.snplist \
+--N 55978 \
+--snp SNP \
+--a1 Allele1 \
+--a2 Allele2 \
+--p P.value \
+--frq Freq1 \
+--signed-sumstats Effect,0 \
+--chunksize 500000 \
+--out CRC_distal 
+
+./ldsc.py \
+--rg CRC_distal.sumstats.gz,BMI.sumstats.gz,WHR.sumstats.gz,AC.sumstats.gz,TU.sumstats.gz,BMI_F.sumstats.gz,WHR_F.sumstats.gz,BMI_M.sumstats.gz,WHR_M.sumstats.gz \
+--ref-ld-chr eur_w_ld_chr/ \
+--w-ld-chr eur_w_ld_chr/ \
+--out rg_CRC_distal_risk_factors
+
+
+./munge_sumstats.py \
+--sumstats Formatted_GECCO/formatted_female_CRC_GWAS_noUKBio_summary_stats_annotated_space.txt \
+--merge-alleles w_hm3.snplist \
+--N 48530 \
+--snp SNP \
+--a1 Allele1 \
+--a2 Allele2 \
+--p P.value \
+--frq Freq1 \
+--signed-sumstats Effect,0 \
+--chunksize 500000 \
+--out CRC_female 
+
+./ldsc.py \
+--rg CRC_female.sumstats.gz,BMI.sumstats.gz,WHR.sumstats.gz,AC.sumstats.gz,TU.sumstats.gz,BMI_F.sumstats.gz,WHR_F.sumstats.gz,BMI_M.sumstats.gz,WHR_M.sumstats.gz \
+--ref-ld-chr eur_w_ld_chr/ \
+--w-ld-chr eur_w_ld_chr/ \
+--out rg_CRC_female_risk_factors
+
+
+
+./munge_sumstats.py \
+--sumstats Formatted_GECCO/formatted_male_CRC_GWAS_noUKBio_summary_stats_annotated_space.txt \
+--merge-alleles w_hm3.snplist \
+--N 50622 \
+--snp SNP \
+--a1 Allele1 \
+--a2 Allele2 \
+--p P.value \
+--frq Freq1 \
+--signed-sumstats Effect,0 \
+--chunksize 500000 \
+--out CRC_male 
+
+./ldsc.py \
+--rg CRC_male.sumstats.gz,BMI.sumstats.gz,WHR.sumstats.gz,AC.sumstats.gz,TU.sumstats.gz,BMI_F.sumstats.gz,WHR_F.sumstats.gz,BMI_M.sumstats.gz,WHR_M.sumstats.gz \
+--ref-ld-chr eur_w_ld_chr/ \
+--w-ld-chr eur_w_ld_chr/ \
+--out rg_CRC_male_risk_factors
+
+
+
+./munge_sumstats.py \
+--sumstats Formatted_GECCO/formatted_proximal_CRC_GWAS_noUKBio_summary_stats_annotated_space.txt \
+--merge-alleles w_hm3.snplist \
+--N 57515 \
+--snp SNP \
+--a1 Allele1 \
+--a2 Allele2 \
+--p P.value \
+--frq Freq1 \
+--signed-sumstats Effect,0 \
+--chunksize 500000 \
+--out CRC_proximal 
+
+./ldsc.py \
+--rg CRC_proximal.sumstats.gz,BMI.sumstats.gz,WHR.sumstats.gz,AC.sumstats.gz,TU.sumstats.gz,BMI_F.sumstats.gz,WHR_F.sumstats.gz,BMI_M.sumstats.gz,WHR_M.sumstats.gz \
+--ref-ld-chr eur_w_ld_chr/ \
+--w-ld-chr eur_w_ld_chr/ \
+--out rg_CRC_proximal_risk_factors
+
+./munge_sumstats.py \
+--sumstats Formatted_GECCO/formatted_rectal_CRC_GWAS_noUKBio_summary_stats_annotated_space.txt \
+--merge-alleles w_hm3.snplist \
+--N 71835 \
+--snp SNP \
+--a1 Allele1 \
+--a2 Allele2 \
+--p P.value \
+--frq Freq1 \
+--signed-sumstats Effect,0 \
+--chunksize 500000 \
+--out CRC_rectal 
+
+./ldsc.py \
+--rg CRC_rectal.sumstats.gz,BMI.sumstats.gz,WHR.sumstats.gz,AC.sumstats.gz,TU.sumstats.gz,BMI_F.sumstats.gz,WHR_F.sumstats.gz,BMI_M.sumstats.gz,WHR_M.sumstats.gz \
+--ref-ld-chr eur_w_ld_chr/ \
+--w-ld-chr eur_w_ld_chr/ \
+--out rg_CRC_rectal_risk_factors
